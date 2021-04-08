@@ -27,7 +27,7 @@ class ContactNew extends Component
 
     public function render()
     {
-        return view('contacts.contact-new');
+        return view('contacts.new');
     }
 
     protected function rules()
