@@ -23,6 +23,7 @@ class ContactIndexTest extends TestCase
     {
         $this->actingAs(User::factory()->withPersonalTeam()->create())
             ->get(route('contacts.index'))
-            ->assertSeeLivewire('contacts.contact-new');
+            ->assertSeeLivewire('contacts.contact-new')
+            ->assertSeeLivewire('contacts.contact-list');
     }
 }

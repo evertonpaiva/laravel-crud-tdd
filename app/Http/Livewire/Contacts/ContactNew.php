@@ -23,6 +23,7 @@ class ContactNew extends Component
         $this->newContact = new Contact();
 
         $this->emit('created');
+        $this->emitTo('contacts.contact-list', 'refreshList');
     }
 
     public function render()
