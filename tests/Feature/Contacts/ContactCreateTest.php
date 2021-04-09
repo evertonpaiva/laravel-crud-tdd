@@ -33,4 +33,36 @@ class ContactCreateTest extends TestCase
 
         $this->assertDatabaseHas('contacts', $contactFake->toArray());
     }
+
+    /**
+     * @test
+     */
+    public function checkRequiredFieldsCreateContact()
+    {
+        $this->actingAs($user = User::factory()->withPersonalTeam()->create());
+
+        Livewire::test(ContactNew::class)
+            ->call('store')
+            ->assertHasErrors([
+                'newContact.name' => 'required',
+                'newContact.email' => 'required',
+                'newContact.phone' => 'required',
+                'newContact.message' => 'required',
+            ]);
+    }
+
+    /**
+     * @test
+     */
+    public function cannotCreateInvalidEmailContact()
+    {
+        $this->actingAs($user = User::factory()->withPersonalTeam()->create());
+
+        $contactFake = Contact::factory()->make(['email' => 'invalid'] );
+
+        Livewire::test(ContactNew::class)
+            ->call('mount', $contactFake)
+            ->call('store')
+            ->assertHasErrors(['newContact.email' => 'email']);
+    }
 }
