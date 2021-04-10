@@ -25,7 +25,8 @@ class ContactItemTest extends TestCase
     {
         $this->actingAs($user = User::factory()->withPersonalTeam()->create());
 
-        $contact = Contact::factory()->create();
+        $contact = Contact::factory()
+            ->create(['team_id' => $user->currentTeam->id]);
 
         $contact->name = 'update name';
         $contact->email = 'update@email.com';
@@ -48,7 +49,8 @@ class ContactItemTest extends TestCase
     {
         $this->actingAs($user = User::factory()->withPersonalTeam()->create());
 
-        $contact = Contact::factory()->create();
+        $contact = Contact::factory()
+            ->create(['team_id' => $user->currentTeam->id]);
 
         Livewire::test(ContactItem::class)
             ->call('confirmDeletion', $contact)
